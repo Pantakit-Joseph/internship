@@ -67,7 +67,18 @@ $attributes = array('class' => 'uk-form uk-form-horizontal', 'name' => 'adminFor
                 		</div>
                     </div>
                 </div>
+				<div class="uk-form-row">
+                    <label class="uk-form-label" for="form-h-it">รหัสผ่าน</label>
+                    <div class="uk-form-controls">
+                        <input type="password" id="form-h-it" name="password" value="" class="uk-width-1-2">
+                        <div>
+                        <?php echo form_error('password'); ?>
+                		<?php echo isset($errors['password'])?$errors['password']:''; ?>
+                		</div>
+                    </div>
+                </div>
             	<input type="hidden" name="id" value="<?php echo $item->id;?>" />
+				<input type="hidden" name="hidden_hash_password" value="<?php echo $item->password;?>" />
             <?php echo form_close(); ?>
 		</div>
 	</div>

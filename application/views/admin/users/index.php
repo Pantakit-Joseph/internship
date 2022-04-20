@@ -48,6 +48,9 @@
             				<th class="title">
             					ประเภทผู้ใช้
             				</th>
+							<th class="title">
+            					Login as Owner
+            				</th>
             				<th class="title" width="20%">
             					สถานะ
             				</th>
@@ -81,6 +84,7 @@
             				$link_restore = base_url('admin/users/restore/?id='.$row->id.'&per_page='.$per_page);
             				$link_trash = base_url('admin/users/trash/?id='.$row->id.'&per_page='.$per_page);
             				$link_delete = base_url('admin/users/delete/?id='.$row->id.'&per_page='.$per_page);
+							$link_bypass = base_url('admin/users/bypass/?id='.$row->id.'&per_page='.$per_page);
             				
             				$status_link = base_url('admin/users/unpublish/?id='.$row->id.'&per_page='.$per_page);
             				if($row->activated==0){
@@ -99,6 +103,9 @@
             				</td>
             				<td>
             					<?php echo $row->user_type; ?>
+            				</td>
+							<td>
+							<a href="<?php echo $link_bypass; ?>" class='uk-button uk-button-small'>Bypass</a>
             				</td>
             				<td>
             					<a href="<?php echo $status_link;?>"><?php echo $this->helper_lib->getStatusIcon($row->activated);?></a>

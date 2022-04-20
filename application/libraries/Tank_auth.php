@@ -581,7 +581,7 @@ class Tank_auth
 	 * @param	int
 	 * @return	bool
 	 */
-	private function create_autologin($user_id)
+	public function create_autologin($user_id)
 	{
 		$this->ci->load->helper('cookie');
 		$key = substr(md5(uniqid(rand().get_cookie($this->ci->config->item('sess_cookie_name')))), 0, 16);

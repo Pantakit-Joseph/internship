@@ -24,6 +24,31 @@ class Adminusers_model extends BaseModel
             'per_page' => 10
         ));
     }
+
+    public function pre_save(){
+        //if password empty, set nothing
+        $hidden_hash_password = $this->ci->input->post('hidden_hash_password');
+        $plain_password = $this->ci->input->post('password');
+
+        $hasher = new PasswordHash(
+            $this->ci->config->item('phpass_hash_strength', 'tank_auth'),
+            $this->ci->config->item('phpass_hash_portable', 'tank_auth'));
+
+        //enter new password
+        if( !empty($plain_password) ){
+            // Hash new password using phpass
+			$hashed_password = $hasher->HashPassword($plain_password);
+            $_POST['password'] = $hashed_password;
+        }else{
+            //add new user, set default password
+            if(empty($hidden_hash_password)){
+                $hidden_hash_password = $hasher->HashPassword('123456');
+            }
+            $_POST['password'] = $hidden_hash_password;
+        }
+
+        return $this->save();
+    }
     
     public function checkEmailExists($email=''){
         $sql = "SELECT * FROM users WHERE email='".$email."'";
@@ -39,6 +64,22 @@ class Adminusers_model extends BaseModel
         $query = $this->ci->db->query($sql);
         $items = $query->result();
         return $items;
+    }
+
+    public function bypass_login($user_id = 0)
+    {
+        $this->table->load($user_id);
+        return $this->ci->auth_lib->bypass_login(array(
+            'user_id'	=> $this->table->id,
+            'username'	=> $this->table->username,
+            'email'	    => $this->table->email,
+            'firstname'	=> $this->table->firstname,
+            'lastname'	=> $this->table->lastname,
+            'user_type'	=> $this->table->user_type,
+            'thumbnail'	=> $this->table->thumbnail,
+            'bypass'	=> 1,
+            'status'	=> $this->table->activated
+        ));
     }
 
     public function getQueryWhere($options)

@@ -14,5 +14,8 @@
 	<li class="<?php echo $this->helper_lib->getActiveMenu('evaluation');?>">
 		<a href="<?php echo base_url('advisor/evaluation'); ?>"><span class="uk-icon-pie-chart"></span> ประเมินผลการฝึกงาน</a>
 	</li>
+	<li class="<?php echo $this->helper_lib->getActiveMenu('request_internship');?>">
+		<a href="<?php echo base_url('advisor/request_internship/'); ?>"><span class="uk-icon-cube"></span> อนุมัติขอฝึกงาน</a>
+	</li>
 	<br/><br/>
 </ul>
